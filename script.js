@@ -1160,7 +1160,7 @@ document.addEventListener('keyup', function(event){
     if(code == 20) {
         if (capsLock == false) {
             showKeys(`.${lang} .shiftUp`);
-                apsLock = true;
+            capsLock = true;
         }
         if (capsLock == true) {
             showKeys(`.${lang} .shiftDown`);
