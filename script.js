@@ -1109,97 +1109,99 @@ document.querySelector('.keyboard__keys').addEventListener('click', function(eve
     }
  })
 
-window.onkeypress = function(event) {
-    textarea.focus();
-    let key = window.event.keyCode;
-    let element = event.target;
-    if (element.tagName != 'TEXTAREA') {
-        textarea.value += String.fromCharCode(key);
-    } 
-    if (element.tagName == 'TEXTAREA') {
-        event.preventDefault();
-        textarea.value += String.fromCharCode(key);
+    window.onkeypress = function(event) {
+        textarea.focus();
+        let key = window.event.keyCode;
+        let element = event.target;
+        if (element.tagName != 'TEXTAREA') {
+            textarea.value += String.fromCharCode(key);
+        } 
+        if (element.tagName == 'TEXTAREA') {
+            event.preventDefault();
+            textarea.value += String.fromCharCode(key);
+        }
     }
-}
 
-document.addEventListener('keydown', function(event) {
-    textarea.focus();
-    let code = event.keyCode;
-    let element = event.target;
-    if (element.tagName != 'TEXTAREA') {
-        if(code == 8) {
-            textarea.value = textarea.value.slice(0, -1);
+    document.addEventListener('keydown', function(event) {
+        textarea.focus();
+        let code = event.keyCode;
+        let element = event.target;
+        if (element.tagName != 'TEXTAREA') {
+            if(code == 8) {
+                textarea.value = textarea.value.slice(0, -1);
+            }
         }
-    }
-    if(code == 16) {
-        shift = true;
-        showKeys(`.${lang} .shiftDown`);
-        showKeys(`.${lang} .shiftUp`);
-    }
-    if(code == 20) {
-        if (capsLock == false) {
-            showKeys(`.${lang} .shiftUp`);
-            capsLock = true;
-        }
-        if (capsLock == true) {
+        if(code == 16) {
+            shift = true;
             showKeys(`.${lang} .shiftDown`);
-            capsLock = false;
-        }
-    }
-    event.stopPropagation();
-    animateColor(event.code);
-})
-
-document.addEventListener('keyup', function(event){
-    let code = event.keyCode;
-    if(code == 16) {
-        shift = false;
-        showKeys(`.${lang} .shiftUp`);
-        showKeys(`.${lang} .shiftDown`);
-    }
-    if(code == 20) {
-        if (capsLock == false) {
             showKeys(`.${lang} .shiftUp`);
-            capsLock = true;
         }
-        if (capsLock == true) {
-            showKeys(`.${lang} .shiftDown`);
-            capsLock = false;
+        if(code == 20) {
+            if (capsLock == false) {
+                showKeys(`.${lang} .shiftUp`);
+                capsLock = true;
+            }
+            if (capsLock == true) {
+                showKeys(`.${lang} .shiftDown`);
+                capsLock = false;
+            }
         }
-    }
-    animateColor(event.code);
-});
+        event.stopPropagation();
+        animateColor(event.code);
+    })
 
-document.onkeydown = function(event) {
-    console.log(lang);
-    if (event.code == 'AltLeft' || event.code == 'AltRight') {
-        document.onkeyup = function(event) {
-            if (event.code == 'ShiftLeft' || event.code == 'ShiftRight') {
-                lang = lang == 'rus' ? 'eng' : 'rus';
-                if (lang == 'rus') {
-                    showKeys('.eng');
-                    showKeys('.eng .shiftDown');
-                    showKeys('.rus');
-                    showKeys('.rus .shiftDown');
-                } 
-                else if (lang == 'eng') {
-                    showKeys('.rus');
-                    showKeys('.rus .shiftDown');
-                    showKeys('.eng');
-                    showKeys('.eng .shiftDown');
+    document.addEventListener('keyup', function(event){
+        let code = event.keyCode;
+        if(code == 16) {
+            shift = false;
+            showKeys(`.${lang} .shiftUp`);
+            showKeys(`.${lang} .shiftDown`);
+        }
+        if(code == 20) {
+            if (capsLock == false) {
+                showKeys(`.${lang} .shiftUp`);
+                capsLock = true;
+            }
+            if (capsLock == true) {
+                showKeys(`.${lang} .shiftDown`);
+                capsLock = false;
+            }
+        }
+        animateColor(event.code);
+    });
+
+    document.onkeydown = function(event) {
+        console.log(lang);
+        if (event.code == 'AltLeft' || event.code == 'AltRight') {
+            document.onkeyup = function(event) {
+                if (event.code == 'ShiftLeft' || event.code == 'ShiftRight') {
+                    lang = lang == 'rus' ? 'eng' : 'rus';
+                    if (lang == 'rus') {
+                        showKeys('.eng');
+                        showKeys('.eng .shiftDown');
+                        showKeys('.rus');
+                        showKeys('.rus .shiftDown');
+                    } 
+                    else if (lang == 'eng') {
+                        showKeys('.rus');
+                        showKeys('.rus .shiftDown');
+                        showKeys('.eng');
+                        showKeys('.eng .shiftDown');
+                    }
+                    // showKeys(`.${lan}`);
+                    // showKeys(`.${lan} .shiftDown`);
+                    addLocalStorage(lang);
+                    console.log(lang);
                 }
-                addLocalStorage(lang);
-                console.log(lang);
             }
         }
     }
-}
 
-function animateColor (evetKey) {
-    for (let i = 0; i < arrKeys.length; i++) {
-        if (arrKeys[i].getAttribute('code') == evetKey) {
-            arrKeys[i].classList.toggle('animate');
+    function animateColor (evetKey) {
+        for (let i = 0; i < arrKeys.length; i++) {
+            if (arrKeys[i].getAttribute('code') == evetKey) {
+                arrKeys[i].classList.toggle('animate');
+            }
         }
     }
-}
 
