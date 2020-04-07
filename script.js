@@ -1,7 +1,7 @@
 window.onload = function() {
 
 }
-let lang = 'rus';
+let lang = 'eng';
 let shift = false;
 let capsLock = false;
 if (localStorage.getItem('lang') != undefined) {
@@ -919,20 +919,20 @@ let arrSymbolRus = [
      shiftSymbol: 'Ctrl',
      capsSymbol: 'Ctrl'
     },
-    {symbol: '<',
+    {symbol: '&larr;',
     which: 37,
     shiftWhich: 37,
     code: 'ArrowLeft',
-    shiftSymbol: '<',
-    capsSymbol: '<'
+    shiftSymbol: '&larr;',
+    capsSymbol: '&larr;'
    },
     '',
-    {symbol: '>',
+    {symbol: '&rarr;',
      which: 39,
      shiftWhich: 39,
      code: 'ArrowRight',
-     shiftSymbol: '>',
-     capsSymbol: '>'
+     shiftSymbol: '&rarr;',
+     capsSymbol: '&rarr;'
     }
 ];
 
@@ -953,15 +953,6 @@ function addText(element, string) {
 }
 function addLocalStorage(lang) {
     localStorage.setItem('lang', lang);
-}
-function pressShiftRus() {
-    for (let i = 0; i < arrKeys.length; i++) {
-        let text = arrKeys[i].textContent;
-        if(text.length == 1) {
-            arrKeys[i].textContent = arrSymbolRus[i].shiftSymbol;
-            console.log(arrKeys[i]);
-        }
-    }
 }
 
 // ------------------wrapper------------------ //
@@ -996,7 +987,7 @@ addElem(boxYellowSecond, boxYellow);
 
 // keyboard__logo //
 let keyboardLogo = createElem('div');
-addText(keyboardLogo, 'RS virtual keyboard');
+addText(keyboardLogo, 'Переключение языка alt + shift');
 addClassName(keyboardLogo, 'keyboard__logo');
 addElem(keyboardLogo, keyboard);
 // keyboard__logo //
@@ -1050,13 +1041,13 @@ function createKey() {
             addElem(key, keyboardKeys);
     
             let keyUp = createElem('div');
-            addText(keyUp, '<');
+            addText(keyUp, '&uarr;');
             addClassName(keyUp, 'keyboard__key key-arrow key-arrow-up');
             addElem(keyUp, key);
     
     
             let keyDown = createElem('div');
-            addText(keyDown, '>');
+            addText(keyDown, '&darr;');
             addClassName(keyDown, 'keyboard__key key-arrow key-arrow-down');
             addElem(keyDown, key);
             arrKeys.push(key);
@@ -1171,6 +1162,7 @@ document.querySelector('.keyboard__keys').addEventListener('click', function(eve
     });
 
     document.onkeydown = function(event) {
+        console.log(event.code);
         console.log(lang);
         if (event.code == 'AltLeft' || event.code == 'AltRight') {
             document.onkeyup = function(event) {
@@ -1188,8 +1180,6 @@ document.querySelector('.keyboard__keys').addEventListener('click', function(eve
                         showKeys('.eng');
                         showKeys('.eng .shiftDown');
                     }
-                    // showKeys(`.${lan}`);
-                    // showKeys(`.${lan} .shiftDown`);
                     addLocalStorage(lang);
                     console.log(lang);
                 }
